@@ -13,12 +13,15 @@ display.setStatusBar( display.HiddenStatusBar )
 physics = require("physics")
 
 function scene:create( event )
+	
 	local sceneGroup = self.view
+	
 	print( "this works?" )
 	physics.start()
 	physics.setGravity( 0, 9.8 ) --standard earth gravity, we can change this value later on
 
 	display.setDefault( "background", 255,255,255 )
+	
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25) -- centers the ball, not final position
 	physics.addBody(ball)
 	ball.bodyType = "dynamic"
@@ -51,6 +54,7 @@ function scene:create( event )
 
     detector = timer.performWithDelay( 0, collisiondetector ,0 ) --checks if ball hit the top of the screen or not
     ball:addEventListener( "touch", flick )
+
 end
 
 function scene:show( event )
