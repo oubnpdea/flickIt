@@ -5,6 +5,8 @@
 -- | |     ____) | |____| |__| | |__| | |__| | | |___| |__| | |__| | |____ 
 -- |_|    |_____/|______|\____/|_____/ \____/   \_____\____/|_____/|______| 
 
+--LUA IS TOP DOWN LANGUAGE, BE SURE TO DECLARE ALL YOUR VARIABLES AND FUNCTIONS BEFORE CALLING THEM
+
 display.setStatusBar( display.HiddenStatusBar )
 local physics = require("physics")
 physics.start()
@@ -16,9 +18,18 @@ local composer = require "composer"
 function scene:create( event )
 	local sceneGroup = self.view
 	display.setDefault( "background", 1,1,1 )
-	flicked = display.newCircle() -- generates the cirle that's flicked, put in position info later
+	flicked = display.newCircle()
+	 -- generates the cirle that's flicked, put in position info later
+	 --keep it static here so the ball doesn't fall on start
+	 --change to dynamic in the flick function
 	sceneGroup:insert(flicked)
 
+
+	function flick (event) --function that checks for flick and applies proper force
+
+
+
+	flicked:addEventListener( "touch", flick )
 
 end
 
