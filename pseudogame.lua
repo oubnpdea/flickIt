@@ -18,18 +18,34 @@ local composer = require "composer"
 function scene:create( event )
 	local sceneGroup = self.view
 	display.setDefault( "background", 1,1,1 )
-	flicked = display.newCircle()
+	ball = display.newCircle()
+	physics.addBody(ball)
+	ball.bodyType = "static"
 	 -- generates the cirle that's flicked, put in position info later
 	 --keep it static here so the ball doesn't fall on start
 	 --change to dynamic in the flick function
-	sceneGroup:insert(flicked)
+	sceneGroup:insert(ball)
 
 
 	function flick (event) --function that checks for flick and applies proper force
+     if event.phase == "began" then
+     	ball.bodyType = "dynamic" --now the ball is able to move and respond to gravity
+     elseif event.phase == "moved" then
+
+          
+          --dragging the ball
+
+          ball.x = event.x
+          ball.y = event.y
+     elseif event.phase == "ended" then
+          --applying force on the ball ball
+          ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
+     end
+end
 
 
 
-	flicked:addEventListener( "touch", flick )
+	ball:addEventListener( "touch", flick )
 
 end
 
