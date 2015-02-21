@@ -7,8 +7,9 @@
 -- hide the status bar
 display.setStatusBar( display.HiddenStatusBar )
 
--- include the Corona "composer" module
 local composer = require "composer"
+display.setDefault( "background", gray )
+composer.gotoScene( "pseudogame" )
+
 
 -- load menu screen
-composer.gotoScene( "menu" )
