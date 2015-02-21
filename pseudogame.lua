@@ -41,6 +41,16 @@ function scene:create( event )
           --applying force on the ball ball
           ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
      end
+
+     function collisiondetector (event)
+     	if ball.y == 0 then 
+     		composer.gotoScene( "gameEnd")
+     		timer.cancel( detector )
+     	end
+     end 
+
+     detector = timer.performWithDelay( 0, collisiondetector ,0 ) --checks if ball hit the top of the screen or not
+
 end
 
 
