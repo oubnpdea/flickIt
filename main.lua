@@ -8,7 +8,6 @@
 display.setStatusBar( display.HiddenStatusBar )
 
 local composer = require "composer"
-display.setDefault( "background", gray )
 composer.gotoScene( "pseudogame" )
 
 
