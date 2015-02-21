@@ -8,16 +8,20 @@
 --LUA IS TOP DOWN LANGUAGE, BE SURE TO DECLARE ALL YOUR VARIABLES AND FUNCTIONS BEFORE CALLING THEM
 
 display.setStatusBar( display.HiddenStatusBar )
-local physics = require("physics")
+physics = require("physics")
 physics.start()
 physics.setGravity( 0, 9.8 ) --standard earth gravity, we can change this value later on
 
 -- include the Corona "composer" module
-local composer = require "composer"
-
+composer = require "composer"
+scene = composer.newScene()
 
 function scene:create( event )
 	local sceneGroup = self.view
+
+	physics.start()
+	physics.setGravity( 0, 9.8 ) --standard earth gravity, we can change this value later on
+
 	display.setDefault( "background", 1,1,1 )
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25) -- centers the ball, not final position
 	physics.addBody(ball)
@@ -48,14 +52,10 @@ function scene:create( event )
      end 
 
      detector = timer.performWithDelay( 0, collisiondetector ,0 ) --checks if ball hit the top of the screen or not
-
+     ball:addEventListener( "touch", flick )
 end
 
 
-
-	ball:addEventListener( "touch", flick )
-
-end
 
 
 
