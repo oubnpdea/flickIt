@@ -15,10 +15,11 @@ physics.setGravity( 0, 9.8 ) --standard earth gravity, we can change this value 
 -- include the Corona "composer" module
 local composer = require "composer"
 
+
 function scene:create( event )
 	local sceneGroup = self.view
 	display.setDefault( "background", 1,1,1 )
-	ball = display.newCircle()
+	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25) -- centers the ball, not final position
 	physics.addBody(ball)
 	ball.bodyType = "static"
 	 -- generates the cirle that's flicked, put in position info later
@@ -31,14 +32,11 @@ function scene:create( event )
      if event.phase == "began" then
      	ball.bodyType = "dynamic" --now the ball is able to move and respond to gravity
      elseif event.phase == "moved" then
-
-          
           --dragging the ball
-
           ball.x = event.x
           ball.y = event.y
      elseif event.phase == "ended" then
-          --applying force on the ball ball
+          --applying force on the ball
           ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
      end
 
