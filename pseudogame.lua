@@ -33,6 +33,7 @@ function scene:create( event )
 
   function flick(event)
       if event.phase == "began" then
+        physics.setGravity(0,0)
         startX = event.x
         startY = event.y
         physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=25, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
@@ -40,6 +41,7 @@ function scene:create( event )
         --dragging the ball
         ball.x = event.x
         ball.y = event.y
+        physics.setGravity(0,12)
       elseif event.phase == "ended" then
         --applying force on the ball
         ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
