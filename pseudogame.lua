@@ -6,7 +6,7 @@
 
 local composer = require( "composer" )
 local scene = composer.newScene()
-local gameUI = require("gameUI")
+
 -- include Corona's "physics" library
 local physics = require "physics"
 physics.start(); physics.pause()
@@ -29,30 +29,24 @@ function scene:create( event )
 	-- create a grey rectangle as the backdrop
 	display.setDefault( "background", 0.1,0.2,0.3 )
   physics.setGravity(0,12)
-  ball = display.newCircle(display.contentCenterX,display.contentCenterY+200,25)
-  ball.linearDamping = 0.4
-  ball.angularDamping = 0.6
-  local dragBody = gameUI.dragBody
-  ball:addEventListener( "touch", dragBody )
+	ball = display.newCircle(display.contentCenterX,display.contentCenterY+200,25)
+
   function flick(event)
-    return gameUI.dragBody(event)
-    --
-      --if event.phase == "began" then
-        --physics.setGravity(0,0)
-        --startX = event.x
-        --startY = event.y
-        --physics.addBody(ball, "dynamic", {friction=1.5, bounce = 0.3, radius=25, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
-      --elseif event.phase == "moved" then
+      if event.phase == "began" then
+        physics.setGravity(0,0)
+        startX = event.x
+        startY = event.y
+        physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=25, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
+      elseif event.phase == "moved" then
         --dragging the ball
-        --ball.x = event.x
-        --ball.y = event.y
-        --physics.setGravity(0,12)
-      --elseif event.phase == "ended" then
+        ball.x = event.x
+        ball.y = event.y
+        physics.setGravity(0,12)
+      elseif event.phase == "ended" then
         --applying force on the ball
-        --ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
-      --end
-      --
-    end
+        ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
+      end
+  end
 
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
@@ -73,7 +67,9 @@ function scene:create( event )
 
   topWall.collision = onLocalCollision
   topWall:addEventListener( "collision", topWall )
-
+	
+  ball:addEventListener( "touch", flick )
+  
   sceneGroup:insert(ball)
   sceneGroup:insert(topWall)
   sceneGroup:insert(bottomWall)
@@ -126,6 +122,7 @@ function scene:destroy( event )
 end
 
 ---------------------------------------------------------------------------------
+
 -- Listener setup
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
