@@ -27,10 +27,10 @@ function scene:create( event )
 	local sceneGroup = self.view
 
 	-- create a grey rectangle as the backdrop
-	local background = display.setDefault( "background", gray )
+	display.setDefault( "background", 0.1,0.2,0.3 )
   physics.setGravity(0,12)
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY+200,25)
-  
+
   function flick(event)
       if event.phase == "began" then
         startX = event.x
@@ -46,6 +46,14 @@ function scene:create( event )
       end
   end
 
+  local function onLocalCollision( self, event )
+    if ( event.phase == "began" ) then
+        print("collision detected")
+    elseif ( event.phase == "ended" ) then
+        print( "collision over" )
+    end
+  end
+
   topWall = display.newRect( display.contentWidth*0.5, 0,display.contentWidth+20, 25 )
   bottomWall = display.newRect( display.contentWidth*0.5, display.contentHeight, display.contentWidth+20, 25 )
   leftWall = display.newRect( -5, display.contentHeight*0.5, 30, display.contentHeight+20 )
@@ -55,9 +63,12 @@ function scene:create( event )
   physics.addBody(leftWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
   physics.addBody(rightWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
 
-
-	ball:addEventListener( "touch", flick )
-	sceneGroup:insert(ball)
+  topWall.collision = onLocalCollision
+  topWall:addEventListener( "collision", topWall )
+	
+  ball:addEventListener( "touch", flick )
+  
+  sceneGroup:insert(ball)
   sceneGroup:insert(topWall)
   sceneGroup:insert(bottomWall)
   sceneGroup:insert(leftWall)
