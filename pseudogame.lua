@@ -28,18 +28,21 @@ function scene:create( event )
 
 	-- create a grey rectangle as the backdrop
 	local background = display.setDefault( "background", gray )
-  physics.setGravity(0,0)
-	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
+  physics.setGravity(0,5)
+	ball = display.newCircle(display.contentCenterX,display.contentCenterY+200,25)
   function flick(event)
      if event.phase == "began" then
+      startX = event.x
+      startY = event.y
       physics.addBody(ball, "dynamic")
      elseif event.phase == "moved" then
+
           --dragging the ball
           ball.x = event.x
           ball.y = event.y
       elseif event.phase == "ended" then
           --applying force on the ball
-          ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
+          ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
       end
 end
 
