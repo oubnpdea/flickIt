@@ -31,15 +31,16 @@ function scene:create( event )
   physics.setGravity(0,0)
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
   function flick(event)
-    if event.phase == "started" then
-        if event.phase == "moved" then
-              physics.addBody(ball, "dynamic")
-              eventStartX = event.xStart
-              eventStartY = event.yStart
-          elseif event.phase == "ended" then
-               ball:applyForce( (eventStartX - event.x) * 5, (eventStartY - event.y ) * 5 )
-        end
-    end
+     if event.phase == "began" then
+      physics.addBody(ball, "dynamic")
+     elseif event.phase == "moved" then
+          --dragging the ball
+          ball.x = event.x
+          ball.y = event.y
+      elseif event.phase == "ended" then
+          --applying force on the ball
+          ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
+      end
 end
 
 	ball:addEventListener( "touch", flick )
