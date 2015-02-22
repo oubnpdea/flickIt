@@ -44,11 +44,12 @@ function scene:create( event )
         --dragging the ball
         ball.x = event.x
         ball.y = event.y
-        physics.setGravity(0,12)
+        physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
+        ball:applyForce(-(startX-event.x)*.1, -(startY-event.y)*.1, 0, 0)
       end
+      physics.setGravity(0,12)
   end
 
   local function onLocalCollision( self, event )
