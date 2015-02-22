@@ -19,7 +19,7 @@ local playBtn
 local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
-	composer.gotoScene( "level1", "fade", 500 )
+	composer.gotoScene( "pseudogame", "fade", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -93,7 +93,7 @@ function scene:destroy( event )
 	-- 
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
-	
+	print("menu destroy")
 	if playBtn then
 		playBtn:removeSelf()	-- widgets must be manually removed
 		playBtn = nil

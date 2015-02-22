@@ -8,7 +8,7 @@
 display.setStatusBar( display.HiddenStatusBar )
 
 local composer = require "composer"
-composer.gotoScene( "pseudogame" )
+composer.gotoScene( "menu" )
 
 
 -- load menu screen
