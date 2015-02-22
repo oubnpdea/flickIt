@@ -28,22 +28,19 @@ function scene:create( event )
 
 	-- create a grey rectangle as the backdrop
 	local background = display.setDefault( "background", gray )
-
-
-	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
-	physics.addBody( ball, "dynamic")
   physics.setGravity(0,0)
-	function flick (event)
-		if ("event.phase == began") then 
-			if event.phase == "moved" then
-				ball.x = event.x
-				ball.y = event.y
-			end
-			if event.phase == "ended" then
-				ball:applyForce( (ball.x) * -0.1, (ball.y) * -0.1, ball.x, ball.y )
-			end
-		end
-	end
+	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
+  function flick(event)
+    if event.phase == "started" then
+        if event.phase == "moved" then
+              physics.addBody(ball, "dynamic")
+              eventStartX = event.xStart
+              eventStartY = event.yStart
+          elseif event.phase == "ended" then
+               ball:applyForce( (eventStartX - event.x) * 5, (eventStartY - event.y ) * 5 )
+        end
+    end
+end
 
 	ball:addEventListener( "touch", flick )
 	-- add physics to the crate
