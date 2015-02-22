@@ -28,31 +28,40 @@ function scene:create( event )
 
 	-- create a grey rectangle as the backdrop
 	local background = display.setDefault( "background", gray )
-  physics.setGravity(0,5)
+  physics.setGravity(0,12)
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY+200,25)
+  
   function flick(event)
-     if event.phase == "began" then
-      startX = event.x
-      startY = event.y
-      physics.addBody(ball, "dynamic")
-     elseif event.phase == "moved" then
-
-          --dragging the ball
-          ball.x = event.x
-          ball.y = event.y
+      if event.phase == "began" then
+        startX = event.x
+        startY = event.y
+        physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=25, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
+      elseif event.phase == "moved" then
+        --dragging the ball
+        ball.x = event.x
+        ball.y = event.y
       elseif event.phase == "ended" then
-          --applying force on the ball
-          ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
+        --applying force on the ball
+        ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, 0, 0)
       end
-end
+  end
+
+  topWall = display.newRect( display.contentWidth*0.5, 0,display.contentWidth+20, 25 )
+  bottomWall = display.newRect( display.contentWidth*0.5, display.contentHeight, display.contentWidth+20, 25 )
+  leftWall = display.newRect( -5, display.contentHeight*0.5, 30, display.contentHeight+20 )
+  rightWall = display.newRect( display.contentWidth+5, display.contentHeight*0.5, 30, display.contentHeight+20 )
+  physics.addBody(topWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
+  physics.addBody(bottomWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
+  physics.addBody(leftWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
+  physics.addBody(rightWall, "static", {density = 15, friction = 1, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
+
 
 	ball:addEventListener( "touch", flick )
-	-- add physics to the crate
-	
-	-- all display objects must be inserted into group
-	--sceneGroup:insert(background)
 	sceneGroup:insert(ball)
-
+  sceneGroup:insert(topWall)
+  sceneGroup:insert(bottomWall)
+  sceneGroup:insert(leftWall)
+  sceneGroup:insert(rightWall)
 end
 
 function scene:show( event )
