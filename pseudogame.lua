@@ -1,100 +1,103 @@
-local composer = require "composer"
+-----------------------------------------------------------------------------------------
+--
+-- level1.lua
+--
+-----------------------------------------------------------------------------------------
+
+local composer = require( "composer" )
 local scene = composer.newScene()
-local physics = require("physics")
--- -----------------------------------------------------------------------------------------------------------------
--- All code outside of the listener functions will only be executed ONCE unless "composer.removeScene()" is called.
--- -----------------------------------------------------------------------------------------------------------------
 
--- local forward references should go here
+-- include Corona's "physics" library
+local physics = require "physics"
+physics.start(); physics.pause()
 
--- -------------------------------------------------------------------------------
+--------------------------------------------
 
-function flick (event) --function that checks for flick and applies proper force
-     if event.phase == "began" then
-          --ball.bodyType = "dynamic" --now the ball is able to move and respond to gravity
-     elseif event.phase == "moved" then
-          --dragging the ball
-          ball.x = event.x
-          ball.y = event.y
-     elseif event.phase == "ended" then
-          --applying force on the ball
-          ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
-      end
-end
+-- forward declarations and other locals
+local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
 
--- "scene:create()"
+
 function scene:create( event )
-   local sceneGroup = self.view
-   print("create called")
-   display.setDefault( "background", grey )
-   print("background = grey")
-   physics.start()
-   print("physics started")
-   physics.setGravity( 0, 9.8 )
-   print("setGravity")
-   ball = display.newCircle(display.contentCenterX,display.contentCenterY,25) -- centers the ball, not final position
-   print("ball created")
-   physics.addBody(ball)
-   print("ball added")
-   ball.bodyType = "dynamic"
-   print("dynamic ball")
-   ball:setFillColor( grey )
-   print("ball filled")
-   sceneGroup:insert(ball)
-   print("ball inserted")
-    detector = timer.performWithDelay( 0, collisiondetector ,0 ) --checks if ball hit the top of the screen or not
-    print("detector")
-    ball:addEventListener( "touch", flick )
-    print("ball event listener added")
+
+	-- Called when the scene's view does not exist.
+	-- 
+	-- INSERT code here to initialize the scene
+	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
+
+	local sceneGroup = self.view
+
+	-- create a grey rectangle as the backdrop
+	local background = display.setDefault( "background", gray )
+
+
+	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
+	physics.addBody( ball, "dynamic")
+	function flick (event)
+		if ("event.phase == began") then 
+			if event.phase == "moved" then
+				ball.x = event.x
+				ball.y = event.y
+			end
+			if event.phase == "ended" then
+				ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
+			end
+		end
+	end
+
+	ball:addEventListener( "touch", flick )
+	-- add physics to the crate
+	
+	-- all display objects must be inserted into group
+	--sceneGroup:insert(background)
+	sceneGroup:insert(ball)
+
 end
 
-
--- "scene:show()"
 function scene:show( event )
-     print("show called")
-    local sceneGroup = self.view
-    local phase = event.phase
-
-    if ( phase == "will" ) then
-        -- Called when the scene is still off screen (but is about to come on screen).
-        print("will (pseudo)")
-    elseif ( phase == "did" ) then
-        -- Called when the scene is now on screen.
-        -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
-        print("menu")
-    end
+	local sceneGroup = self.view
+	local phase = event.phase
+	
+	if phase == "will" then
+		-- Called when the scene is still off screen and is about to move on screen
+	elseif phase == "did" then
+		-- Called when the scene is now on screen
+		-- 
+		-- INSERT code here to make the scene come alive
+		-- e.g. start timers, begin animation, play audio, etc.
+		physics.start()
+	end
 end
 
-
--- "scene:hide()"
 function scene:hide( event )
-     print("hide called")
-    local sceneGroup = self.view
-    local phase = event.phase
-
-    if ( phase == "will" ) then
-        -- Called when the scene is on screen (but is about to go off screen).
-        -- Insert code here to "pause" the scene.
-        -- Example: stop timers, stop animation, stop audio, etc.
-    elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
-    end
+	local sceneGroup = self.view
+	
+	local phase = event.phase
+	
+	if event.phase == "will" then
+		-- Called when the scene is on screen and is about to move off screen
+		--
+		-- INSERT code here to pause the scene
+		-- e.g. stop timers, stop animation, unload sounds, etc.)
+		physics.stop()
+	elseif phase == "did" then
+		-- Called when the scene is now off screen
+	end	
+	
 end
 
-
--- "scene:destroy()"
 function scene:destroy( event )
-     print("destroy called")
-    local sceneGroup = self.view
 
-    -- Called prior to the removal of scene's view ("sceneGroup").
-    -- Insert code here to clean up the scene.
-    -- Example: remove display objects, save state, etc.
+	-- Called prior to the removal of scene's "view" (sceneGroup)
+	-- 
+	-- INSERT code here to cleanup the scene
+	-- e.g. remove display objects, remove touch listeners, save state, etc.
+	local sceneGroup = self.view
+	
+	package.loaded[physics] = nil
+	physics = nil
 end
 
-
--- -------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 
 -- Listener setup
 scene:addEventListener( "create", scene )
@@ -102,10 +105,6 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 
--- -------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
 return scene
-
-
-
-
