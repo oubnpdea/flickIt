@@ -32,6 +32,7 @@ function scene:create( event )
 
 	ball = display.newCircle(display.contentCenterX,display.contentCenterY,25)
 	physics.addBody( ball, "dynamic")
+  physics.setGravity(0,0)
 	function flick (event)
 		if ("event.phase == began") then 
 			if event.phase == "moved" then
@@ -39,7 +40,7 @@ function scene:create( event )
 				ball.y = event.y
 			end
 			if event.phase == "ended" then
-				ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
+				ball:applyForce( (ball.x) * -0.1, (ball.y) * -0.1, ball.x, ball.y )
 			end
 		end
 	end
