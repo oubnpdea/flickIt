@@ -75,14 +75,15 @@ end
 function scene:hide( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-	
+	print("menu hide")
 	if event.phase == "will" then
 		-- Called when the scene is on screen and is about to move off screen
-		--
+		print("will")
 		-- INSERT code here to pause the scene
 		-- e.g. stop timers, stop animation, unload sounds, etc.)
 	elseif phase == "did" then
 		-- Called when the scene is now off screen
+		print("did")
 	end	
 end
 

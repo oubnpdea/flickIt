@@ -19,15 +19,9 @@ function flick (event) --function that checks for flick and applies proper force
      elseif event.phase == "ended" then
           --applying force on the ball
           ball:applyForce( (ball.x) * 0.5, (ball.y) * 0.5, ball.x, ball.y )
-          end
-     end
+      end
+end
 
-     function collisiondetector (event)
-          if ball.y == 0 then 
-               composer.gotoScene( "gameEnd")
-               timer.cancel( detector )
-          end
-    end 
 -- "scene:create()"
 function scene:create( event )
    local sceneGroup = self.view
@@ -63,7 +57,7 @@ function scene:show( event )
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
-        print("will")
+        print("will (pseudo)")
     elseif ( phase == "did" ) then
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
