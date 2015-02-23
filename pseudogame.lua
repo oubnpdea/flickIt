@@ -28,7 +28,7 @@ function scene:create( event )
 
 	-- create a grey rectangle as the backdrop
 	display.setDefault( "background", 0.1,0.2,0.3 )
-  physics.setGravity(0,12)
+  physics.setGravity(0,18)
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
 
@@ -67,7 +67,7 @@ function scene:create( event )
         --applying force on the ball
         ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, ball.x, ball.y)
       end
-      physics.setGravity(0,12)
+      physics.setGravity(0,18)
   end
 
   local function onLocalCollision( self, event )
