@@ -6,7 +6,7 @@
 
 local composer = require( "composer" )
 local scene = composer.newScene()
-
+local widget = require ("widget")
 -- include Corona's "physics" library
 local physics = require "physics"
 physics.start(); physics.pause()
@@ -30,16 +30,34 @@ function scene:create( event )
 	display.setDefault( "background", 0.1,0.2,0.3 )
   physics.setGravity(0,12)
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
-  ball:scale( 0.05, 0.05 )
+  ball:scale( 0.1, 0.1 )
 
+  function reset (event)
+  	if event.phase == "began" then
+  		physics.removeBody( ball )
+  		ball.x = display.contentCenterX
+  		ball.y = display.contentCenterY + 220
+  	end
+  end
 
+  local button1 = widget.newButton
+	{
+	    width = 240,
+	    height = 120,
+	    label = "Reset",
+	    onEvent = reset
+	}
+
+	-- Center the button
+	button1.x = display.contentCenterX
+	button1.y = display.contentCenterY - 150 
 
   function flick(event)
       if event.phase == "began" then
         physics.setGravity(0,0)
         startX = event.x
         startY = event.y
-        physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=15, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
+        physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
       elseif event.phase == "moved" then
         --dragging the ball
         ball.x = event.x
@@ -47,7 +65,7 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        ball:applyForce(-(startX-event.x)*.1, -(startY-event.y)*.1, 0, 0)
+        ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, ball.x, ball.y)
       end
       physics.setGravity(0,12)
   end
@@ -60,10 +78,10 @@ function scene:create( event )
     end
   end
 
-  topWall = display.newRect( display.contentWidth*0.5, 0,display.contentWidth+20, 25 )
-  bottomWall = display.newRect( display.contentWidth*0.5, display.contentHeight, display.contentWidth+20, 25 )
-  leftWall = display.newRect( -5, display.contentHeight*0.5, 30, display.contentHeight+20 )
-  rightWall = display.newRect( display.contentWidth+5, display.contentHeight*0.5, 30, display.contentHeight+20 )
+  topWall = display.newRect( display.contentWidth*0.5, -15,display.contentWidth+20, 25 )
+  bottomWall = display.newRect( display.contentWidth*0.5, display.contentHeight + 14, display.contentWidth+20, 25 )
+  leftWall = display.newRect( -20, display.contentHeight*0.5, 30, display.contentHeight+20 )
+  rightWall = display.newRect( display.contentWidth+15, display.contentHeight*0.5, 30, display.contentHeight+20 )
   physics.addBody(topWall, "static", {density = 15, friction = 0, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
   physics.addBody(bottomWall, "static", {density = 15, friction = 0, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
   physics.addBody(leftWall, "static", {density = 15, friction = 0, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
