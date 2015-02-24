@@ -42,7 +42,7 @@ function scene:create( event )
   line3 = display.newRect( 0, display.contentCenterY-85,display.contentWidth*2, 1)
   physics.addBody(line3, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
   line3:setFillColor( 0.5 )
-
+  count = 0
   collide1 = 0
   collide2 = 0
   collide3 = 0
@@ -57,24 +57,9 @@ function scene:create( event )
           collide1 = 0
           collide2 = 0
           collide3 = 0
-          timer1 = timer.performWithDelay( 300, gameWin, 0 )
         end
     end
   end
-
-  function gameWin( self, event )
-    if collide1 == collide3 then
-      print("working")
-    elseif collide1 == 2 and collide2 == 1 then
-      alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
-      timer.cancel(timer1)
-      collide1 = 0
-      collide2 = 0
-      collide3 = 0
-    end
-  end
-
-  timer1 = timer.performWithDelay( 30, gameWin, 0 )
 
   function reset (event)
   	if event.phase == "began" then
@@ -84,7 +69,6 @@ function scene:create( event )
       collide1 = 0
       collide2 = 0
       collide3 = 0
-      timer1 = timer.performWithDelay( 300, gameWin, 0 )
   	end
   end
 
@@ -101,6 +85,7 @@ function scene:create( event )
 	button1.y = display.contentCenterY - 150 
 
   function flick(event)
+    count = 0
       if event.phase == "began" then
         physics.setGravity(0,0)
         startX = event.x
@@ -145,7 +130,19 @@ function scene:create( event )
         print("collision detected")
         collide2 = 1
     elseif ( event.phase == "ended" ) then
-        collide2 = 1
+        collide2 = 2
+    end
+
+    if collide1 == 1 then
+      count = count + 1
+      print("count = "); print(count)
+      if count ==  2 then
+        alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
+        collide1 = 0
+       collide2 = 0
+        collide3 = 0
+       count = 0
+      end
     end
   end
 
