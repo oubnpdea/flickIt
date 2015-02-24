@@ -61,6 +61,32 @@ function scene:create( event )
     end
   end
 
+<<<<<<< HEAD
+=======
+  function gameWinVerify (event)
+    if collide3 == 0 and collide1 == 2 then
+      timer.cancel( timer1 )
+      alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
+      print("this is gameVerify speaking")
+      collide1 = 0
+      collide2 = 0
+      collide3 = 0
+    end
+  end
+
+  function gameWin( self, event )
+    if collide1 == collide3 then
+      print("working")
+    elseif collide1 == 2 and collide2 == 1 then
+      timer.cancel(timer1)
+      timer.performWithDelay( 500, gameWinVerify )
+      print( "I triggered gameVerify" )
+    end
+  end
+
+  timer1 = timer.performWithDelay( 30, gameWin, 0 )
+
+>>>>>>> origin/master
   function reset (event)
   	if event.phase == "began" then
   		physics.removeBody( ball )
