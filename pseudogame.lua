@@ -47,6 +47,21 @@ function scene:create( event )
   collide2 = 0
   collide3 = 0
 
+  local function onComplete( event )
+   if event.action == "clicked" then
+        local i = event.index
+        if i == 1 then
+          physics.removeBody( ball )
+          ball.x = display.contentCenterX
+          ball.y = display.contentCenterY + 220
+          collide1 = 0
+          collide2 = 0
+          collide3 = 0
+          timer1 = timer.performWithDelay( 300, gameWin, 0 )
+        end
+    end
+  end
+
   local function gameWin( self, event )
     if collide1 == collide3 then
       print("working")
@@ -103,20 +118,7 @@ function scene:create( event )
       physics.setGravity(0,18)
   end
 
-  local function onComplete( event )
-   if event.action == "clicked" then
-        local i = event.index
-        if i == 1 then
-          physics.removeBody( ball )
-          ball.x = display.contentCenterX
-          ball.y = display.contentCenterY + 220
-          collide1 = 0
-          collide2 = 0
-          collide3 = 0
-          timer1 = timer.performWithDelay( 300, gameWin, 0 )
-        end
-    end
-  end
+
 
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
