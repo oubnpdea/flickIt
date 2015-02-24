@@ -34,21 +34,21 @@ function scene:create( event )
 
   line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
-  line1:setFillColor( .5 )
+  line1:setFillColor( .07, .90, .03 )
 
   line2 = display.newRect( 0, display.contentCenterY-60,display.contentWidth*2, 1)
   physics.addBody(line2, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}}) --detection line, must be placed 60px above the initial line
-  line2:setFillColor( 1 )
+  line2:setFillColor( .07, .9, .03 )
 
   line3 = display.newRect( 0, display.contentCenterY-85,display.contentWidth*2, 1)
   physics.addBody(line3, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
-  line3:setFillColor( .5)
+  line3:setFillColor(1, 0, 0)
 
   collide1 = 0
   collide2 = 0
   collide3 = 0
 
-  local function onComplete( event )
+  function onComplete( event )
    if event.action == "clicked" then
         local i = event.index
         if i == 1 then
@@ -63,7 +63,7 @@ function scene:create( event )
     end
   end
 
-  local function gameWin( self, event )
+  function gameWin( self, event )
     if collide1 == collide3 then
       print("working")
     elseif collide1 == 2 and collide2 == 1 then
@@ -133,7 +133,7 @@ function scene:create( event )
 
   local function onLocalCollisionline1( self, event )
     if ( event.phase == "began" ) then
-        print("collision detected - line 1")
+        print("collision detected")
         collide1 = 1
         print( collide1 )
     elseif ( event.phase == "ended" ) then
@@ -143,7 +143,7 @@ function scene:create( event )
 
   local function onLocalCollisionline2( self, event )
     if ( event.phase == "began" ) then
-        print("collision detected - line 2")
+        print("collision detected")
         collide2 = 1
     elseif ( event.phase == "ended" ) then
         collide2 = 1
