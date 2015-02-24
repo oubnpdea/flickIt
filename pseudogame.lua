@@ -34,6 +34,8 @@ function scene:create( event )
 
   line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
+  line1:setFillColor( 0.5 )
+
   
   line1.bodyType = "static"
 
@@ -99,12 +101,12 @@ function scene:create( event )
 	
   ball:addEventListener( "touch", flick )
   
+  sceneGroup:insert(line1)
   sceneGroup:insert(ball)
   sceneGroup:insert(topWall)
   sceneGroup:insert(bottomWall)
   sceneGroup:insert(leftWall)
   sceneGroup:insert(rightWall)
-  sceneGroup:insert(line1)
 end
 
 function scene:show( event )
