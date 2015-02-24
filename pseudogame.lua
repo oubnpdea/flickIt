@@ -32,6 +32,11 @@ function scene:create( event )
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
 
+  line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
+  physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
+  
+  line1.bodyType = "static"
+
   function reset (event)
   	if event.phase == "began" then
   		physics.removeBody( ball )
@@ -89,6 +94,8 @@ function scene:create( event )
 
   topWall.collision = onLocalCollision
   topWall:addEventListener( "collision", topWall )
+  line1.collision = onLocalCollision
+  line1:addEventListener( "collision", line1 )
 	
   ball:addEventListener( "touch", flick )
   
@@ -97,6 +104,7 @@ function scene:create( event )
   sceneGroup:insert(bottomWall)
   sceneGroup:insert(leftWall)
   sceneGroup:insert(rightWall)
+  sceneGroup:insert(line1)
 end
 
 function scene:show( event )
