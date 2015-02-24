@@ -47,7 +47,7 @@ function scene:create( event )
   collide2 = 0
   collide3 = 0
 
-  local function onComplete( event )
+  function onComplete( event )
    if event.action == "clicked" then
         local i = event.index
         if i == 1 then
@@ -62,7 +62,7 @@ function scene:create( event )
     end
   end
 
-  local function gameWin( self, event )
+  function gameWin( self, event )
     if collide1 == collide3 then
       print("working")
     elseif collide1 == 2 and collide2 == 1 then
