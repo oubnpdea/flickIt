@@ -36,8 +36,16 @@ function scene:create( event )
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
   line1:setFillColor( 0.5 )
 
-  
-  line1.bodyType = "static"
+  line2 = display.newRect( 0, display.contentCenterY-60,display.contentWidth*2, 1)
+  physics.addBody(line2, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}}) --detection line, must be placed 60px above the initial line
+
+  line3 = display.newRect( 0, display.contentCenterY-85,display.contentWidth*2, 1)
+  physics.addBody(line3, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
+  line3:setFillColor( 0.5 )
+
+  collide1 = 0
+  collide2 = 0
+  collide3 = 0
 
   function reset (event)
   	if event.phase == "began" then
@@ -77,13 +85,57 @@ function scene:create( event )
       physics.setGravity(0,18)
   end
 
+  local function onComplete( event )
+   if event.action == "clicked" then
+        local i = event.index
+        if i == 1 then
+          physics.removeBody( ball )
+          ball.x = display.contentCenterX
+          ball.y = display.contentCenterY + 220
+        end
+    end
+  end
+
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
+        collide3 = 1
         print("collision detected")
+        local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
     end
   end
+
+  local function onLocalCollisionline1( self, event )
+    if ( event.phase == "began" ) then
+        print("collision detected")
+        collide1 = 1
+        print( collide1 )
+    elseif ( event.phase == "ended" ) then
+        collide1 = 2
+    end
+  end
+
+  local function onLocalCollisionline2( self, event )
+    if ( event.phase == "began" ) then
+        print("collision detected")
+        collide2 = 1
+    elseif ( event.phase == "ended" ) then
+        collide2 = 1
+    end
+  end
+
+  local function gameWin( self, event )
+    if collide1 == collide3 then
+      print("dammit")
+    elseif collide1 == 2 and collide2 == 1 then
+      alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
+    end
+  end
+
+
+
+
 
   topWall = display.newRect( display.contentWidth*0.5, -15,display.contentWidth+20, 25 )
   bottomWall = display.newRect( display.contentWidth*0.5, display.contentHeight + 14, display.contentWidth+20, 25 )
@@ -96,12 +148,20 @@ function scene:create( event )
 
   topWall.collision = onLocalCollision
   topWall:addEventListener( "collision", topWall )
-  line1.collision = onLocalCollision
+  line3.collision = onLocalCollision
+  line3:addEventListener( "collision", line3 )
+  line1.collision = onLocalCollisionline1
   line1:addEventListener( "collision", line1 )
+  line2.collision = onLocalCollisionline2
+  line2:addEventListener( "collision", line2 )
 	
-  ball:addEventListener( "touch", flick )
+  ball:addEventListener( "touch", flick ) --ball movement
+
+  
   
   sceneGroup:insert(line1)
+  sceneGroup:insert(line2)
+  sceneGroup:insert(line3)
   sceneGroup:insert(ball)
   sceneGroup:insert(topWall)
   sceneGroup:insert(bottomWall)
