@@ -47,11 +47,29 @@ function scene:create( event )
   collide2 = 0
   collide3 = 0
 
+  local function gameWin( self, event )
+    if collide1 == collide3 then
+      print("working")
+    elseif collide1 == 2 and collide2 == 1 then
+      alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
+      timer.cancel(timer1)
+      collide1 = 0
+      collide2 = 0
+      collide3 = 0
+    end
+  end
+
+  timer1 = timer.performWithDelay( 30, gameWin, 0 )
+
   function reset (event)
   	if event.phase == "began" then
   		physics.removeBody( ball )
   		ball.x = display.contentCenterX
   		ball.y = display.contentCenterY + 220
+      collide1 = 0
+      collide2 = 0
+      collide3 = 0
+      timer1 = timer.performWithDelay( 300, gameWin, 0 )
   	end
   end
 
@@ -92,6 +110,10 @@ function scene:create( event )
           physics.removeBody( ball )
           ball.x = display.contentCenterX
           ball.y = display.contentCenterY + 220
+          collide1 = 0
+          collide2 = 0
+          collide3 = 0
+          timer1 = timer.performWithDelay( 300, gameWin, 0 )
         end
     end
   end
@@ -125,13 +147,6 @@ function scene:create( event )
     end
   end
 
-  local function gameWin( self, event )
-    if collide1 == collide3 then
-      print("dammit")
-    elseif collide1 == 2 and collide2 == 1 then
-      alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
-    end
-  end
 
 
 
