@@ -9,15 +9,13 @@ local scene = composer.newScene()
 local widget = require ("widget")
 -- include Corona's "physics" library
 local physics = require "physics"
-local gameUI = require("gameUI")
-local easingx  = require("easingx")
 physics.start(); physics.pause()
 
 --------------------------------------------
 
 -- forward declarations and other locals
 local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
-dragBody = gameUI.dragBody
+
 
 function scene:create( event )
 
@@ -63,6 +61,8 @@ function scene:create( event )
     end
   end
 
+<<<<<<< HEAD
+=======
   function gameWinVerify (event)
     if collide3 == 0 and collide1 == 2 then
       timer.cancel( timer1 )
@@ -86,7 +86,7 @@ function scene:create( event )
 
   timer1 = timer.performWithDelay( 30, gameWin, 0 )
 
-
+>>>>>>> origin/master
   function reset (event)
   	if event.phase == "began" then
   		physics.removeBody( ball )
@@ -110,28 +110,7 @@ function scene:create( event )
 	button1.x = display.contentCenterX
 	button1.y = display.contentCenterY - 150 
 
-
-  function spawnDisk( event )
-    local phase = event.phase
-    if "ended" == phase then
-      print( "this is working" )
-      ball.x = event.x; ball.y = event.y
-      ball.rotation = math.random( 1, 360 )
-      ball.xScale = 0.8; ball.yScale = 0.8
-      
-      transition.to(ball, { time = 500, xScale = 1.0, yScale = 1.0, transition = easingx.easeOutElastic }) -- "pop" animation
-      
-      physics.addBody( ball, { density=0.3, friction=0.6, radius=0.1} )
-      ball.linearDamping = 0.4
-      ball.angularDamping = 0.6
-      
-      ball:addEventListener( "touch", dragBody ) -- make object draggable
-    end
-    
-    return true
-  end
-
-  --[[function flick(event)
+  function flick(event)
     count = 0
       if event.phase == "began" then
         physics.setGravity(0,0)
@@ -148,7 +127,7 @@ function scene:create( event )
         ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, ball.x, ball.y)
       end
       physics.setGravity(0,18)
-  end]]--
+  end
 
 
 
@@ -215,10 +194,11 @@ function scene:create( event )
   line1:addEventListener( "collision", line1 )
   line2.collision = onLocalCollisionline2
   line2:addEventListener( "collision", line2 )
+	
+  ball:addEventListener( "touch", flick ) --ball movement
 
-
-  ball:addEventListener( "touch", spawnDisk )
-
+  
+  
   sceneGroup:insert(line1)
   sceneGroup:insert(line2)
   sceneGroup:insert(line3)
