@@ -93,12 +93,23 @@ function scene:create( event )
         physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
       elseif event.phase == "moved" then
         --dragging the ball
+        if not x1 then
+                x1 = display.contentCenterX
+        end
+        if not y1 then
+                y1 = display.contentCenterY
+        end
+        x2 = x1
+        y2 = y1
+        x1 = event.x
+        y1 = event.y
         ball.x = event.x
         ball.y = event.y
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        ball:applyForce(-(startX-event.x)*.3, -(startY-event.y)*.3, ball.x, ball.y)
+        local a = 5
+        ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
   end
