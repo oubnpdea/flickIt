@@ -49,6 +49,7 @@ function scene:create( event )
 
   function onComplete( event )
    if event.action == "clicked" then
+        alerts = 0
         local i = event.index
         if i == 1 then
           physics.removeBody( ball )
@@ -119,9 +120,16 @@ function scene:create( event )
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
         collide3 = 1
-            count = 0
+        if not alerts then
+                alerts = 0
+        end
+        alerts = alerts + 1
+        count = 0
         print("collision detected")
-        local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
+        if alerts == 1 then
+            local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
+            
+        end
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
     end
