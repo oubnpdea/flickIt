@@ -108,7 +108,7 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        local a = 5
+        local a = 3
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
@@ -119,6 +119,7 @@ function scene:create( event )
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
         collide3 = 1
+            count = 0
         print("collision detected")
         local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
     elseif ( event.phase == "ended" ) then
