@@ -87,6 +87,7 @@ function scene:create( event )
   function flick(event)
     count = 0
       if event.phase == "began" then
+            print("event began")
         physics.setGravity(0,0)
         startX = event.x
         startY = event.y
@@ -108,6 +109,7 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
+            print("event ended")
         local a = 5
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
