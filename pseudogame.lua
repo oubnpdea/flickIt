@@ -49,7 +49,6 @@ function scene:create( event )
 
   function onComplete( event )
    if event.action == "clicked" then
-        alerts = 0
         local i = event.index
         if i == 1 then
           physics.removeBody( ball )
@@ -88,6 +87,7 @@ function scene:create( event )
   function flick(event)
     count = 0
       if event.phase == "began" then
+            print("event began")
         physics.setGravity(0,0)
         startX = event.x
         startY = event.y
@@ -109,7 +109,8 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        local a = 3
+            print("event ended")
+        local a = 5
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
@@ -120,16 +121,8 @@ function scene:create( event )
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
         collide3 = 1
-        if not alerts then
-                alerts = 0
-        end
-        alerts = alerts + 1
-        count = 0
         print("collision detected")
-        if alerts == 1 then
-            local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
-            
-        end
+        local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
     end
