@@ -31,7 +31,8 @@ function scene:create( event )
   physics.setGravity(0,18)
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
-
+    
+    
   line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
   line1:setFillColor( 0.5 )
@@ -89,11 +90,17 @@ function scene:create( event )
     count = 0
       if event.phase == "began" then
         physics.setGravity(0,0)
+         tableX = {}
+         tableY = {}
+         tableT = {}
         startX = event.x
         startY = event.y
+        tableX[0], tableY[0] = startX, startY
+        tableT[0] = system.getTimer()
         physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
       elseif event.phase == "moved" then
         --dragging the ball
+        i = 1
         if not x1 then
                 x1 = display.contentCenterX
         end
@@ -104,13 +111,18 @@ function scene:create( event )
         y2 = y1
         x1 = event.x
         y1 = event.y
+        tableX[i], tableY[i] = x1, y1
+        tableT[i] = system.getTimer()
+        i = i + 1
         ball.x = event.x
         ball.y = event.y
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
-        local a = 3
-        ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
+        local a = 50/(tableT[1]-tableT[0])
+        local xV, yV = a*(tableX[1]-tableX[0]), a*(tableY[1]-tableY[0])
+        print("xV = " .. xV .. ", yV = " .. yV)
+        ball:applyForce(xV, yV, ball.x, ball.y)
       end
       physics.setGravity(0,18)
   end
