@@ -124,7 +124,7 @@ function scene:create( event )
         print("xV = " .. xV .. ", yV = " .. yV)
         ball:applyForce(xV, yV, ball.x, ball.y)
       end
-      physics.setGravity(0,18)
+      physics.setGravity(0,10)
   end
 
 
