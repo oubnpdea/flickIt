@@ -20,7 +20,7 @@ local screenW, screenH, halfW = display.contentWidth, display.contentHeight, dis
 function scene:create( event )
 
 	-- Called when the scene's view does not exist.
-	-- 
+	--
 	-- INSERT code here to initialize the scene
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
@@ -83,16 +83,19 @@ function scene:create( event )
 
 	-- Center the button
 	button1.x = display.contentCenterX
-	button1.y = display.contentCenterY - 150 
+	button1.y = display.contentCenterY - 150
+
+	physics.addBody(ball, "static", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
 
   function flick(event)
     count = 0
       if event.phase == "began" then
         physics.setGravity(0,0)
+				display.getCurrentStage():setFocus(ball)
         startX = event.x
         startY = event.y
-        physics.addBody(ball, "dynamic", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
-      elseif event.phase == "moved" then
+				ball.bodyType = "dynamic"
+              elseif event.phase == "moved" then
         --dragging the ball
         if not x1 then
                 x1 = display.contentCenterX
@@ -128,7 +131,7 @@ function scene:create( event )
         print("collision detected")
         if alerts == 1 then
             local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
-            
+
         end
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
@@ -188,11 +191,11 @@ function scene:create( event )
   line1:addEventListener( "collision", line1 )
   line2.collision = onLocalCollisionline2
   line2:addEventListener( "collision", line2 )
-	
+
   ball:addEventListener( "touch", flick ) --ball movement
 
-  
-  
+
+
   sceneGroup:insert(line1)
   sceneGroup:insert(line2)
   sceneGroup:insert(line3)
@@ -206,12 +209,12 @@ end
 function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-	
+
 	if phase == "will" then
 		-- Called when the scene is still off screen and is about to move on screen
 	elseif phase == "did" then
 		-- Called when the scene is now on screen
-		-- 
+		--
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
 		physics.start()
@@ -220,9 +223,9 @@ end
 
 function scene:hide( event )
 	local sceneGroup = self.view
-	
+
 	local phase = event.phase
-	
+
 	if event.phase == "will" then
 		-- Called when the scene is on screen and is about to move off screen
 		--
@@ -231,18 +234,18 @@ function scene:hide( event )
 		physics.stop()
 	elseif phase == "did" then
 		-- Called when the scene is now off screen
-	end	
-	
+	end
+
 end
 
 function scene:destroy( event )
 
 	-- Called prior to the removal of scene's "view" (sceneGroup)
-	-- 
+	--
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
 	local sceneGroup = self.view
-	
+
 	package.loaded[physics] = nil
 	physics = nil
 end
