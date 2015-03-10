@@ -52,7 +52,7 @@ function scene:create( event )
         alerts = 0
         local i = event.index
         if i == 1 then
-          physics.removeBody( ball )
+          ball.bodyType = "static"
           ball.x = display.contentCenterX
           ball.y = display.contentCenterY + 220
           collide1 = 0
@@ -64,7 +64,7 @@ function scene:create( event )
 
   function reset (event)
   	if event.phase == "began" then
-  		physics.removeBody( ball )
+      ball.bodyType = "static"
   		ball.x = display.contentCenterX
   		ball.y = display.contentCenterY + 220
       collide1 = 0
@@ -95,7 +95,7 @@ function scene:create( event )
         startX = event.x
         startY = event.y
 				ball.bodyType = "dynamic"
-              elseif event.phase == "moved" then
+        elseif event.phase == "moved" then
         --dragging the ball
         if not x1 then
                 x1 = display.contentCenterX
@@ -116,6 +116,7 @@ function scene:create( event )
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
+      display.getCurrentStage():setFocus(nil)
   end
 
 
