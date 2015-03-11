@@ -93,20 +93,16 @@ function scene:create( event )
         display.getCurrentStage():setFocus( ball )
         self.isFocus = true
         startX = event.x
+				x1, x2 = startX, startX
         startY = event.y
+				y1, y2 = startY, startY
 				ball.bodyType = "dynamic"
-        elseif event.phase == "moved" then
-        --dragging the ball
-        if not x1 then
-                x1 = display.contentCenterX
-        end
-        if not y1 then
-                y1 = display.contentCenterY
-        end
-        x2 = x1
-        y2 = y1
-        x1 = event.x
-        y1 = event.y
+      elseif event.phase == "moved" then
+        --dragging the bal
+				x2 = x1
+				y2 = y1
+				x1 = event.x
+				y1 = event.y
         ball.x = event.x
         ball.y = event.y
         physics.setGravity(0,0)
@@ -118,10 +114,13 @@ function scene:create( event )
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
-      --display.getCurrentStage():setFocus(ball, nil)
+      timer.performWithDelay(10, erase)
+			return true
   end
 
-
+	local function erase()
+		display.getCurrentStage():setFocus(nil)
+	end
 
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
