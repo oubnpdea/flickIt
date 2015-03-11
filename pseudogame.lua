@@ -10,7 +10,6 @@ local widget = require ("widget")
 -- include Corona's "physics" library
 local physics = require "physics"
 physics.start(); physics.pause()
-
 --------------------------------------------
 
 -- forward declarations and other locals
@@ -116,7 +115,7 @@ function scene:create( event )
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
-      --display.getCurrentStage():setFocus(nil)
+      display.getCurrentStage():setFocus(nil)
   end
 
 
