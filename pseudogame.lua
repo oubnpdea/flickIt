@@ -26,10 +26,13 @@ function scene:create( event )
 	local sceneGroup = self.view
 
 	-- create a grey rectangle as the backdrop
-	display.setDefault( "background", 0.1,0.2,0.3 )
+	display.setDefault( "background", .14, .23, .31)
   physics.setGravity(0,18)
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
+
+  target = display.newImage( "targetCover.png", display.contentCenterX, display.contentCenterY - 30 )
+  target:scale( 0.3, 0.2 )
 
   line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
@@ -45,6 +48,8 @@ function scene:create( event )
   collide1 = 0
   collide2 = 0
   collide3 = 0
+
+
 
   function onComplete( event )
    if event.action == "clicked" then
@@ -74,15 +79,16 @@ function scene:create( event )
 
   local button1 = widget.newButton
 	{
-	    width = 240,
-	    height = 120,
-	    label = "Reset",
+	    width = 45,
+	    height = 45,
+      defaultFile = "resetButton.png",
+      overFile = "resetButtonClicked.png",
 	    onEvent = reset
 	}
 
 	-- Center the button
-	button1.x = display.contentCenterX
-	button1.y = display.contentCenterY - 150
+	button1.x = display.contentCenterX - 150
+	button1.y = display.contentCenterY + 290
 
 	physics.addBody(ball, "static", {friction=1, bounce = 0.3, radius=30, isSleeping = false,filter = {maskBits = 10, categoryBits = 4}})
 
@@ -201,6 +207,7 @@ function scene:create( event )
   sceneGroup:insert(line1)
   sceneGroup:insert(line2)
   sceneGroup:insert(line3)
+  sceneGroup:insert(target)
   sceneGroup:insert(ball)
   sceneGroup:insert(topWall)
   sceneGroup:insert(bottomWall)
