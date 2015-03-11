@@ -90,7 +90,8 @@ function scene:create( event )
     count = 0
       if event.phase == "began" then
         physics.setGravity(0,0)
-				display.getCurrentStage():setFocus(ball)
+        display.getCurrentStage():setFocus( ball )
+        self.isFocus = true
         startX = event.x
         startY = event.y
 				ball.bodyType = "dynamic"
@@ -111,6 +112,8 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
+        display.getCurrentStage():setFocus( nil )
+        self.isFocus = nil
         local a = 3
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
