@@ -114,13 +114,8 @@ function scene:create( event )
         ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
       end
       physics.setGravity(0,18)
-      timer.performWithDelay(10, erase)
 			return true
   end
-
-	local function erase()
-		display.getCurrentStage():setFocus(nil)
-	end
 
   local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
