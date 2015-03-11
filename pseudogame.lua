@@ -97,6 +97,7 @@ function scene:create( event )
         startY = event.y
 				y1, y2 = startY, startY
 				ball.bodyType = "dynamic"
+				time1 = system.getTimer()
       elseif event.phase == "moved" then
         --dragging the bal
 				x2 = x1
@@ -108,10 +109,11 @@ function scene:create( event )
         physics.setGravity(0,0)
       elseif event.phase == "ended" then
         --applying force on the ball
+				time2 = system.getTimer()
         display.getCurrentStage():setFocus( nil )
         self.isFocus = nil
-        local a = 3
-        ball:applyForce(a*(x1-x2), a*(y1-y2), ball.x, ball.y)
+        local a = 500
+        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
       end
       physics.setGravity(0,18)
 			return true
