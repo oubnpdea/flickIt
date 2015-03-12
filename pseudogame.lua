@@ -34,22 +34,30 @@ function scene:create( event )
   target = display.newImage( "targetCover.png", display.contentCenterX, display.contentCenterY - 30 )
   target:scale( 0.3, 0.2 )
 
-  line1 = display.newRect( 0, display.contentCenterY,display.contentWidth*2, 1)
+  line1 = display.newRect( 0, display.contentCenterY+28,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
   line1:setFillColor( 0.5 )
 
-  line2 = display.newRect( 0, display.contentCenterY-60,display.contentWidth*2, 1)
+  line2 = display.newRect( 0, display.contentCenterY-60+28,display.contentWidth*2, 1)
   physics.addBody(line2, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}}) --detection line, must be placed 60px above the initial line
 
-  line3 = display.newRect( 0, display.contentCenterY-85,display.contentWidth*2, 1)
+  line3 = display.newRect( 0, display.contentCenterY-92,display.contentWidth*2, 1)
   physics.addBody(line3, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
   line3:setFillColor( 0.5 )
   count = 0
   collide1 = 0
   collide2 = 0
   collide3 = 0
+  attempt = widget.newButton
+	{
+		x = display.contentCenterX,
+		y = display.contentCenterY+300,
+		label = "Attempts: 0",
+		labelColor = {default={1,1,1}, over = {1,1,1}},
+		textOnly = true
 
-
+	}
+	attempts = 0
 
   function onComplete( event )
    if event.action == "clicked" then
@@ -74,6 +82,7 @@ function scene:create( event )
       collide1 = 0
       collide2 = 0
       collide3 = 0
+			attempts = 0
   	end
   end
 
@@ -95,6 +104,7 @@ function scene:create( event )
   function flick(event)
     count = 0
       if event.phase == "began" then
+				attempts = attempts+1
         physics.setGravity(0,0)
         display.getCurrentStage():setFocus( ball )
         self.isFocus = true
@@ -118,6 +128,7 @@ function scene:create( event )
 				time2 = system.getTimer()
         display.getCurrentStage():setFocus( nil )
         self.isFocus = nil
+<<<<<<< HEAD
         print( time1 )
         print( time2 )
         local a = 350
@@ -135,6 +146,11 @@ function scene:create( event )
           ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
         else]]--
           ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
+=======
+        local a = 250
+        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
+				attempt:setLabel("Attempts: " .. attempts)
+>>>>>>> origin/master
       end
       physics.setGravity(0,24)
 			return true
@@ -151,7 +167,8 @@ function scene:create( event )
         print("collision detected")
         if alerts == 1 then
             local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
-
+						attempts = 0
+						attempt:setLabel("Attempts: " .. attempts)
         end
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
@@ -184,6 +201,8 @@ function scene:create( event )
         collide1 = 0
        collide2 = 0
         collide3 = 0
+				attempts = 0
+				attempt:setLabel("Attempts: " .. attempts)
        count = 0
       end
     end
