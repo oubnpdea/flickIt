@@ -131,12 +131,13 @@ function scene:create( event )
         self.isFocus = nil
         print( time1 )
         print( time2 )
-        local a = 350
         totalTime = time2 - time1
-        totalTimehalf = totalTime * 2
+        totalTimehalf = totalTime / 2
+				local a = 1/(20*math.pow(.1,totalTimehalf/25))
         distance = x2 - x1
         forceApplied = a*(x1-x2)/totalTimehalf
         print( "the total distance is:" .. distance )
+				print("totalTimehalf = " .. totalTimehalf)
         print( "the total force applied was:" .. forceApplied )
         --[[if totalTime < 100 and distance == 0 then
           print( "2nd event triggered" )
@@ -146,7 +147,7 @@ function scene:create( event )
           ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
         else]]--
           --ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
-        local a = 250
+				print(a)
         ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), x1, y1)
 				attempt:setLabel("Attempts: " .. attempts)
       end
