@@ -128,7 +128,6 @@ function scene:create( event )
 				time2 = system.getTimer()
         display.getCurrentStage():setFocus( nil )
         self.isFocus = nil
-<<<<<<< HEAD
         print( time1 )
         print( time2 )
         local a = 350
@@ -146,11 +145,9 @@ function scene:create( event )
           ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
         else]]--
           ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
-=======
         local a = 250
         ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
 				attempt:setLabel("Attempts: " .. attempts)
->>>>>>> origin/master
       end
       physics.setGravity(0,24)
 			return true
