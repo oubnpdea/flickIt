@@ -5,6 +5,7 @@ local overlay = composer.newScene()
 
 function overlay:create(event)
 	local overlayGroup = self.view
+<<<<<<< HEAD
   local win = event.params
 	for k, v in pairs( win ) do
    win = v
@@ -18,6 +19,20 @@ function overlay:create(event)
     didWin = display.newImage("overlayRed.png", display.contentCenterX, display.contentCenterY)
     didWin.height = 450
     didWin.width = 500
+=======
+  local win = event.params[0]
+  print(win)
+  if win == true then
+    didWin = display.newImage("overlayBlue.png", display.contentCenterX/20, display.contentCenterY/20)
+    didWin.x = display.contentCenterX
+    didWin.y = display.contentCenterY - 10
+    didWin:scale( 0.25, 0.25 )
+  else
+    didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
+    didWin.x = display.contentCenterX
+    didWin.y = display.contentCenterY - 10
+    didWin:scale(0.25, 0.25)
+>>>>>>> origin/master
   end
 end
 
