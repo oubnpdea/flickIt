@@ -144,7 +144,7 @@ function scene:create( event )
           print( "this is supah fast" )
           ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
         else]]--
-          ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
+          --ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
         local a = 250
         ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
 				attempt:setLabel("Attempts: " .. attempts)
