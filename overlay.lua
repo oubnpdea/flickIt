@@ -5,6 +5,9 @@ local overlay = composer.newScene()
 
 function overlay:create(event)
 	local overlayGroup = self.view
+	backgroundOverlay = display.newRect (display.contentCenterX,display.contentCenterY, 360, 670)
+	backgroundOverlay:setFillColor( black )
+	backgroundOverlay.alpha = 0.4
   local win = event.params
 	for k, v in pairs( win ) do
    win = v
