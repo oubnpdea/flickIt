@@ -118,10 +118,25 @@ function scene:create( event )
 				time2 = system.getTimer()
         display.getCurrentStage():setFocus( nil )
         self.isFocus = nil
-        local a = 500
-        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
+        print( time1 )
+        print( time2 )
+        local a = 350
+        totalTime = time2 - time1
+        totalTimehalf = totalTime * 2
+        distance = x2 - x1
+        forceApplied = a*(x1-x2)/totalTimehalf
+        print( "the total distance is:" .. distance )
+        print( "the total force applied was:" .. forceApplied )
+        --[[if totalTime < 100 and distance == 0 then 
+          print( "2nd event triggered" )
+          ball:applyForce(-1050/totalTime, -1050/totalTime, ball.x, ball.y)
+        elseif totalTime < 100 and distance <= 2 then
+          print( "this is supah fast" )
+          ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
+        else]]--
+          ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
       end
-      physics.setGravity(0,18)
+      physics.setGravity(0,24)
 			return true
   end
 
