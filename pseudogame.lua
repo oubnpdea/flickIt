@@ -27,7 +27,7 @@ function scene:create( event )
 
 	-- create a grey rectangle as the backdrop
 	display.setDefault( "background", .14, .23, .31)
-  physics.setGravity(0,18)
+  physics.setGravity(0,30)
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
 
@@ -83,6 +83,7 @@ function scene:create( event )
       collide2 = 0
       collide3 = 0
 			attempts = 0
+			attempt:setLabel("Attempts: " .. attempts)
   	end
   end
 
@@ -137,7 +138,7 @@ function scene:create( event )
         forceApplied = a*(x1-x2)/totalTimehalf
         print( "the total distance is:" .. distance )
         print( "the total force applied was:" .. forceApplied )
-        --[[if totalTime < 100 and distance == 0 then 
+        --[[if totalTime < 100 and distance == 0 then
           print( "2nd event triggered" )
           ball:applyForce(-1050/totalTime, -1050/totalTime, ball.x, ball.y)
         elseif totalTime < 100 and distance <= 2 then
@@ -146,7 +147,7 @@ function scene:create( event )
         else]]--
           --ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
         local a = 250
-        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
+        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), x1, y1)
 				attempt:setLabel("Attempts: " .. attempts)
       end
       physics.setGravity(0,24)
