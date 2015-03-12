@@ -9,12 +9,18 @@ local scene = composer.newScene()
 local widget = require ("widget")
 -- include Corona's "physics" library
 local physics = require "physics"
+local overlay = require("overlay")
 physics.start(); physics.pause()
 --------------------------------------------
 
 -- forward declarations and other locals
 local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
 
+
+function scene:resumeGame()
+	composer.hideOverlay()
+	reset()
+end
 
 function scene:create( event )
 
@@ -164,7 +170,7 @@ function scene:create( event )
         count = 0
         print("collision detected")
         if alerts == 1 then
-            local alert = native.showAlert( "You Lost!", "Haha you're bad at this game", { "Crap!" }, onComplete )
+					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false" }})
 						attempts = 0
 						attempt:setLabel("Attempts: " .. attempts)
         end
@@ -195,7 +201,7 @@ function scene:create( event )
       count = count + 1
       print("count = "); print(count)
       if count ==  2 then
-        alert = native.showAlert( "You Win", "gr8 b8 m8 i r8 8/8", { "Alright!" }, onComplete )
+        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true" }})
         collide1 = 0
        collide2 = 0
         collide3 = 0
