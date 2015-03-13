@@ -3,6 +3,15 @@ local widget = require ("widget")
 local overlay = composer.newScene()
 
 
+local function reset (event)
+	if event.phase == "ended" then
+		print( "this is working" )
+		composer.hideOverlay( "fade", 400 )
+		composer.removeScene( "pseudogame" )
+		composer.gotoScene("pseudogame", "fade", 400)
+	end
+end
+
 
 function overlay:create(event)
 	local overlayGroup = self.view
@@ -55,14 +64,14 @@ function overlay:create(event)
 	      	overFile = "resetButtonClicked.png",
 			onEvent = reset
 		}
+	overlayGroup:insert(backgroundOverlay)
+	overlayGroup:insert(didWin)
+	overlayGroup:insert(button1)
+	overlayGroup:insert(label1)
+	overlayGroup:insert(label2)
   end
 end
 
-
-local function reset()
-	composer.hideOverlay("fade", 400)
-	composer.gotoScene("pseudogame")
-end
 
 function overlay:show(event)
 	local overlayGroup = self.view
