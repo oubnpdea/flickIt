@@ -202,7 +202,7 @@ function scene:create( event )
       count = count + 1
       print("count = "); print(count)
       if count ==  2 then
-        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = true }})
+        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true" }})
         collide1 = 0
        collide2 = 0
         collide3 = 0
