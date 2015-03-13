@@ -1,6 +1,7 @@
 local composer = require( "composer" )
 local widget = require ("widget")
 local overlay = composer.newScene()
+<<<<<<< HEAD
 button1 = widget.newButton {
 		x = display.contentCenterX,
 		y = display.contentCenterY+40,
@@ -12,6 +13,11 @@ button1 = widget.newButton {
 }
 button1.isVisible = false
 button1:setEnabled(false)
+=======
+
+
+
+>>>>>>> origin/master
 function overlay:create(event)
 	local overlayGroup = self.view
 	overlayGroup:insert(button1)
@@ -55,6 +61,19 @@ function overlay:create(event)
 			fontSize = 40,
 			isEnabled = false
 		}
+<<<<<<< HEAD
+=======
+		local button1 = widget.newButton
+		{
+			x = display.contentCenterX,
+			y = display.contentCenterY+40,
+		    width = 50,
+		    height = 50,
+	      	defaultFile = "resetButton.png",
+	      	overFile = "resetButtonClicked.png",
+			onEvent = reset
+		}
+>>>>>>> origin/master
   end
 	button1.isVisible = true
 	button1:setEnabled(true)
