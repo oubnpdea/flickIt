@@ -62,6 +62,7 @@ function scene:create( event )
 		font = "HelveticaNeue-Thin",
 		labelColor = {default={1,1,1}, over = {1,1,1}},
 		textOnly = true,
+		fontSize = 20,
 		isEnabled = false
 	}
 	attempts = 0

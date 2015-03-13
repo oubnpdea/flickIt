@@ -16,13 +16,51 @@ function overlay:create(event)
     didWin = display.newImage("overlayBlue.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
-    didWin:scale( 0.3, 0.3 )
+    didWin:scale( 0.33, 0.33 )
   else
     didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
-    didWin:scale(0.3, 0.3)
+    didWin:scale(0.33, 0.33)
+		label1 = widget.newButton
+		{
+			x = display.contentCenterX,
+			y = display.contentCenterY-85,
+			label = "Game Over",
+			font = "HelveticaNeue-Thin",
+			labelColor = {default={1,1,1}, over = {1,1,1}},
+			textOnly = true,
+			fontSize = 36,
+			isEnabled = false
+		}
+		label2 = widget.newButton
+		{
+			x = display.contentCenterX,
+			y = display.contentCenterY-30,
+			label = "Level X",
+			font = "HelveticaNeue-Bold",
+			labelColor = {default={1,1,1}, over = {1,1,1}},
+			textOnly = true,
+			fontSize = 40,
+			isEnabled = false
+		}
+		local button1 = widget.newButton
+		{
+				x = display.contentCenterX,
+				y = display.contentCenterY+40,
+		    width = 50,
+		    height = 50,
+	      defaultFile = "resetButton.png",
+	      overFile = "resetButtonClicked.png",
+				onEvent = reset
+		}
   end
+end
+
+
+local function reset()
+	composer.hideOverlay("fade", 400)
+	composer.gotoScene("pseudogame")
 end
 
 function overlay:show(event)
