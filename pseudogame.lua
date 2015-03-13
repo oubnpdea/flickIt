@@ -56,12 +56,13 @@ function scene:create( event )
   collide3 = 0
   attempt = widget.newButton
 	{
-		x = display.contentCenterX,
+		x = display.contentCenterX+130,
 		y = display.contentCenterY+300,
-		label = "Attempts: 0",
+		label = "Attempt 0",
+		font = "HelveticaNeue-Thin",
 		labelColor = {default={1,1,1}, over = {1,1,1}},
-		textOnly = true
-
+		textOnly = true,
+		isEnabled = false
 	}
 	attempts = 0
 
@@ -89,7 +90,7 @@ function scene:create( event )
       collide2 = 0
       collide3 = 0
 			attempts = 0
-			attempt:setLabel("Attempts: " .. attempts)
+			attempt:setLabel("Attempt " .. attempts)
   	end
   end
 
@@ -154,7 +155,7 @@ function scene:create( event )
           --ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
         local a = 250
         ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), x1, y1)
-				attempt:setLabel("Attempts: " .. attempts)
+				attempt:setLabel("Attempt " .. attempts)
       end
       physics.setGravity(0,24)
 			return true
@@ -170,9 +171,9 @@ function scene:create( event )
         count = 0
         print("collision detected")
         if alerts == 1 then
-					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false" }})
+					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = false }})
 						attempts = 0
-						attempt:setLabel("Attempts: " .. attempts)
+						attempt:setLabel("Attempt " .. attempts)
         end
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
@@ -201,12 +202,12 @@ function scene:create( event )
       count = count + 1
       print("count = "); print(count)
       if count ==  2 then
-        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true" }})
+        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = true }})
         collide1 = 0
        collide2 = 0
         collide3 = 0
 				attempts = 0
-				attempt:setLabel("Attempts: " .. attempts)
+				attempt:setLabel("Attempt " .. attempts)
        count = 0
       end
     end

@@ -15,12 +15,12 @@ function overlay:create(event)
   if win == "true" then
     didWin = display.newImage("overlayBlue.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
-    didWin.y = display.contentCenterY - 10
+    didWin.y = display.contentCenterY - 25
     didWin:scale( 0.3, 0.3 )
   else
     didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
-    didWin.y = display.contentCenterY - 10
+    didWin.y = display.contentCenterY - 25
     didWin:scale(0.3, 0.3)
   end
 end
