@@ -3,7 +3,7 @@ local widget = require ("widget")
 local overlay = composer.newScene()
 
 
-<<<<<<< HEAD
+
 local function reset (event)
 	if event.phase == "ended" then
 		print( "this is working" )
@@ -14,8 +14,6 @@ local function reset (event)
 end
 
 
-=======
->>>>>>> origin/master
 function overlay:create(event)
 	local overlayGroup = self.view
 	backgroundOverlay = display.newRect (display.contentCenterX,display.contentCenterY, 360, 670)
