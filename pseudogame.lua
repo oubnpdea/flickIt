@@ -19,11 +19,11 @@ local screenW, screenH, halfW = display.contentWidth, display.contentHeight, dis
 
 function scene:resumeGame()
 	composer.hideOverlay()
-	reset()
+	physics.start()
 end
 
 function scene:create( event )
-
+	physics.start()
 	-- Called when the scene's view does not exist.
 	--
 	-- INSERT code here to initialize the scene
