@@ -3,6 +3,7 @@ local widget = require ("widget")
 local overlay = composer.newScene()
 
 
+<<<<<<< HEAD
 local function reset (event)
 	if event.phase == "ended" then
 		print( "this is working" )
@@ -13,6 +14,8 @@ local function reset (event)
 end
 
 
+=======
+>>>>>>> origin/master
 function overlay:create(event)
 	local overlayGroup = self.view
 	backgroundOverlay = display.newRect (display.contentCenterX,display.contentCenterY, 360, 670)
@@ -56,13 +59,13 @@ function overlay:create(event)
 		}
 		local button1 = widget.newButton
 		{
-			x = display.contentCenterX,
-			y = display.contentCenterY+40,
+				x = display.contentCenterX,
+				y = display.contentCenterY+40,
 		    width = 50,
 		    height = 50,
-	      	defaultFile = "resetButton.png",
-	      	overFile = "resetButtonClicked.png",
-			onEvent = reset
+	      defaultFile = "resetButton.png",
+	      overFile = "resetButtonClicked.png",
+				onEvent = reset
 		}
 	overlayGroup:insert(backgroundOverlay)
 	overlayGroup:insert(didWin)
