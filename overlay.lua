@@ -1,10 +1,20 @@
 local composer = require( "composer" )
 local widget = require ("widget")
 local overlay = composer.newScene()
-
-
+button1 = widget.newButton {
+		x = display.contentCenterX,
+		y = display.contentCenterY+40,
+		width = 50,
+		height = 50,
+		defaultFile = "resetButton.png",
+		overFile = "resetButtonClicked.png",
+		onEvent = touch
+}
+button1.isVisible = false
+button1:setEnabled(false)
 function overlay:create(event)
 	local overlayGroup = self.view
+	overlayGroup:insert(button1)
 	backgroundOverlay = display.newRect (display.contentCenterX,display.contentCenterY, 360, 670)
 	backgroundOverlay:setFillColor( black )
 	backgroundOverlay.alpha = 0.4
@@ -17,6 +27,7 @@ function overlay:create(event)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
     didWin:scale( 0.33, 0.33 )
+		overlayGroup:insert(didWin)
   else
     didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
@@ -44,23 +55,18 @@ function overlay:create(event)
 			fontSize = 40,
 			isEnabled = false
 		}
-		local button1 = widget.newButton
-		{
-				x = display.contentCenterX,
-				y = display.contentCenterY+40,
-		    width = 50,
-		    height = 50,
-	      defaultFile = "resetButton.png",
-	      overFile = "resetButtonClicked.png",
-				onEvent = reset
-		}
   end
+	button1.isVisible = true
+	button1:setEnabled(true)
 end
 
-
-local function reset()
-	composer.hideOverlay("fade", 400)
-	composer.gotoScene("pseudogame")
+function touch(event)
+	if event.phase == "began" then
+		print("reset called")
+		composer.hideOverlay()
+		composer.gotoScene("pseudogame")
+	end
+	return true
 end
 
 function overlay:show(event)
