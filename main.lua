@@ -8,7 +8,7 @@
 display.setStatusBar( display.HiddenStatusBar )
 
 local composer = require "composer"
-composer.gotoScene( "level1" )
+composer.gotoScene( "level3" )
 
 
 -- load menu screen
