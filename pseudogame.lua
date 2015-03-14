@@ -37,6 +37,9 @@ function scene:create( event )
 	ball = display.newImage("ball.png", display.contentCenterX, display.contentCenterY + 220  )
   ball:scale( 0.1, 0.1 )
 
+  arrow = display.newImage( "arrow.png", display.contentCenterX, display.contentCenterY + 160 )
+  arrow:scale( 0.14, 0.14 )
+  sceneGroup:insert(arrow)
   target = display.newImage( "targetCover.png", display.contentCenterX, display.contentCenterY - 30 )
   target:scale( 0.3, 0.2 )
 
