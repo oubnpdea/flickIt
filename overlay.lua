@@ -28,12 +28,39 @@ function overlay:create(event)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
     didWin:scale( 0.33, 0.33 )
+    	local completeLabel = widget.newButton
+		{
+			x = display.contentCenterX,
+			y = display.contentCenterY-85,
+			label = "Complete!",
+			labelXOffset = 2,
+			font = "HelveticaNeue-Thin",
+			labelColor = {default={1,1,1}, over = {1,1,1}},
+			textOnly = true,
+			fontSize = 36,
+			isEnabled = false
+		}
+		local levelLabel = widget.newButton
+		{
+			x = display.contentCenterX,
+			y = display.contentCenterY-30,
+			label = "Level X",
+			font = "HelveticaNeue-Bold",
+			labelColor = {default={1,1,1}, over = {1,1,1}},
+			textOnly = true,
+			fontSize = 40,
+			isEnabled = false
+		}
+	overlayGroup:insert(backgroundOverlay)
+	overlayGroup:insert(didWin)
+	overlayGroup:insert(completeLabel)
+	overlayGroup:insert(levelLabel)
   else
     didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
     didWin:scale(0.33, 0.33)
-		label1 = widget.newButton
+		local label1 = widget.newButton
 		{
 			x = display.contentCenterX,
 			y = display.contentCenterY-85,
@@ -44,7 +71,7 @@ function overlay:create(event)
 			fontSize = 36,
 			isEnabled = false
 		}
-		label2 = widget.newButton
+		local label2 = widget.newButton
 		{
 			x = display.contentCenterX,
 			y = display.contentCenterY-30,
@@ -57,13 +84,13 @@ function overlay:create(event)
 		}
 		local button1 = widget.newButton
 		{
-				x = display.contentCenterX,
-				y = display.contentCenterY+40,
-		    width = 50,
-		    height = 50,
-	      defaultFile = "resetButton.png",
-	      overFile = "resetButtonClicked.png",
-				onEvent = reset
+			x = display.contentCenterX,
+			y = display.contentCenterY+40,
+		    width = 60,
+		    height = 60,
+	      	defaultFile = "resetButton.png",
+	      	overFile = "resetButtonClicked.png",
+			onEvent = reset
 		}
 	overlayGroup:insert(backgroundOverlay)
 	overlayGroup:insert(didWin)

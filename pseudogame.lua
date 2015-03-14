@@ -59,13 +59,13 @@ function scene:create( event )
   collide3 = 0
   attempt = widget.newButton
 	{
-		x = display.contentCenterX+130,
-		y = display.contentCenterY+300,
+		x = display.contentCenterX+120,
+		y = display.contentCenterY+290,
 		label = "Attempt 0",
 		font = "HelveticaNeue-Thin",
 		labelColor = {default={1,1,1}, over = {1,1,1}},
 		textOnly = true,
-		fontSize = 20,
+		fontSize = 25,
 		isEnabled = false
 	}
 	attempts = 0
@@ -149,16 +149,8 @@ function scene:create( event )
         forceApplied = a*(x1-x2)/totalTimehalf
         print( "the total distance is:" .. distance )
         print( "the total force applied was:" .. forceApplied )
-        --[[if totalTime < 100 and distance == 0 then
-          print( "2nd event triggered" )
-          ball:applyForce(-1050/totalTime, -1050/totalTime, ball.x, ball.y)
-        elseif totalTime < 100 and distance <= 2 then
-          print( "this is supah fast" )
-          ball:applyForce(a*(x1-x2)/200, a*(y1-y2)/200, ball.x, ball.y)
-        else]]--
-          --ball:applyForce(a*(x1-x2)/totalTimehalf, a*(y1-y2)/totalTimehalf, ball.x, ball.y)
         local a = 250
-        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), x1, y1)
+        ball:applyForce(a*(x1-x2)/(time2-time1), a*(y1-y2)/(time2-time1), ball.x, ball.y)
 				attempt:setLabel("Attempt " .. attempts)
       end
       physics.setGravity(0,24)
@@ -175,9 +167,9 @@ function scene:create( event )
         count = 0
         print("collision detected")
         if alerts == 1 then
-					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = false }})
-						attempts = 0
-						attempt:setLabel("Attempt " .. attempts)
+					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false"}})
+					attempts = 0
+					attempt:setLabel("Attempt " .. attempts)
         end
     elseif ( event.phase == "ended" ) then
         print( "collision over" )
