@@ -27,7 +27,7 @@ function overlay:create(event)
     didWin = display.newImage("overlayBlue.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
-    didWin:scale( 0.33, 0.33 )
+    didWin:scale( 0.35, 0.35 )
     	local completeLabel = widget.newButton
 		{
 			x = display.contentCenterX,
@@ -40,6 +40,7 @@ function overlay:create(event)
 			fontSize = 36,
 			isEnabled = false
 		}
+
 		local levelLabel = widget.newButton
 		{
 			x = display.contentCenterX,
@@ -59,7 +60,7 @@ function overlay:create(event)
     didWin = display.newImage("overlayRed.png", display.contentCenterX/20, display.contentCenterY/20)
     didWin.x = display.contentCenterX
     didWin.y = display.contentCenterY - 25
-    didWin:scale(0.33, 0.33)
+    didWin:scale(0.35, 0.35)
 		local label1 = widget.newButton
 		{
 			x = display.contentCenterX,
