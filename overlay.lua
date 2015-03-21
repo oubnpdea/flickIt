@@ -14,7 +14,7 @@ local function reset (event)
 	end
 end
 
-function win()
+function winner()
 	composer.removeScene("level"..level)
 	composer.gotoScene("level"..(level+1))
 end
@@ -85,7 +85,7 @@ function overlay:create(event)
 		    height = 60,
 	      	defaultFile = "continueButton.png",
 	      	overFile = "continueButton.png",
-			onEvent = win
+			onEvent = winner
 		}
 	overlayGroup:insert(backgroundOverlay)
 	overlayGroup:insert(didWin)
