@@ -40,7 +40,7 @@ function scene:create( event )
   --[[arrow = display.newImage( "arrow.png", display.contentCenterX, display.contentCenterY + 160 )
   arrow:scale( 0.14, 0.14 )
   sceneGroup:insert(arrow)]]--
-  
+
   target = display.newImage( "targetCover.png", display.contentCenterX, display.contentCenterY + 40 )
   target:scale( 0.3, 0.3 )
 
@@ -168,7 +168,7 @@ function scene:create( event )
         count = 0
         print("collision detected")
         if alerts == 1 then
-					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false"}})
+					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false", level = 5}})
 					attempts = 0
 					attempt:setLabel("Attempt " .. attempts)
         end
@@ -199,7 +199,7 @@ function scene:create( event )
       count = count + 1
       print("count = "); print(count)
       if count ==  2 then
-        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true" }})
+        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true", level = 5 }})
         collide1 = 0
        collide2 = 0
         collide3 = 0
@@ -234,7 +234,7 @@ function scene:create( event )
   line2:addEventListener( "collision", line2 )
 
   ball:addEventListener( "touch", flick ) --ball movement
-  
+
   sceneGroup:insert(line1)
   sceneGroup:insert(line2)
   sceneGroup:insert(line3)

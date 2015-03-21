@@ -167,7 +167,7 @@ function scene:create( event )
         count = 0
         print("collision detected")
         if alerts == 1 then
-					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false"}})
+					composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false", level = 1}})
 					attempts = 0
 					attempt:setLabel("Attempt " .. attempts)
         end
@@ -198,7 +198,7 @@ function scene:create( event )
       count = count + 1
       print("count = "); print(count)
       if count ==  2 then
-        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true" }})
+        composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true", level = 1 }})
         collide1 = 0
        collide2 = 0
         collide3 = 0
