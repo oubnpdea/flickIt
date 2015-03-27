@@ -43,20 +43,20 @@ function scene:create( event )
   target = display.newImage( "targetCover.png", display.contentCenterX, display.contentCenterY - 120 )
   target:scale( 0.3, 0.5 )
 
-  line1 = display.newRect( 0, display.contentCenterY+22,display.contentWidth*2, 1)
+  --[[line1 = display.newRect( 0, display.contentCenterY+22,display.contentWidth*2, 1)
   physics.addBody(line1, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
-  line1:setFillColor( 0.5 )
+  line1:setFillColor( 1, 1, 1 )
 
   line2 = display.newRect( 0, display.contentCenterY-60+22,display.contentWidth*2, 1)
   physics.addBody(line2, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}}) --detection line, must be placed 60px above the initial line
 
-  line3 = display.newRect( 0, 53,display.contentWidth*2, 1)
+  line3 = display.newRect( 0, 47,display.contentWidth*2, 1)
   physics.addBody(line3, "static", {density = 0, friction = 0, bounce = 0, isSensor = true,filter = {maskBits = 12, categoryBits = 2}})
-  line3:setFillColor( 0.5 )
+  line3:setFillColor( 1, 1, 1 )
   count = 0
   collide1 = 0
   collide2 = 0
-  collide3 = 0
+  collide3 = 0]]--
   attempt = widget.newButton
 	{
 		x = display.contentCenterX+120,
@@ -78,9 +78,9 @@ function scene:create( event )
           ball.bodyType = "static"
           ball.x = display.contentCenterX
           ball.y = display.contentCenterY + 220
-          collide1 = 0
+          --[[collide1 = 0
           collide2 = 0
-          collide3 = 0
+          collide3 = 0]]--
         end
     end
   end
@@ -90,9 +90,9 @@ function scene:create( event )
       ball.bodyType = "static"
   		ball.x = display.contentCenterX
   		ball.y = display.contentCenterY + 220
-      collide1 = 0
+      --[[collide1 = 0
       collide2 = 0
-      collide3 = 0
+      collide3 = 0]]--
 			attempts = 0
 			attempt:setLabel("Attempt " .. attempts)
   	end
@@ -157,7 +157,53 @@ function scene:create( event )
 			return true
   end
 
-  local function onLocalCollision( self, event )
+  lastY = ball.y
+
+  local function update( event )
+    r = (ball.contentHeight - (166*ball.yScale))/2
+    x = ball.x
+    lastY, y = y or 0, ball.y
+
+    top = target.y-(306*target.yScale)
+    bot = target.y+(286*target.yScale)
+
+    -- check if ball goes off screen -> reset
+    if (y-r > screenH or y+r < 0 or x-r > screenW or x+r < 0) then
+      ball.bodyType = "static"
+      ball.x = display.contentCenterX
+      ball.y = display.contentCenterY + 220
+      print("off screen")
+    end
+
+    -- check if ball went past target -> lose
+    if (y-r < top) then
+      composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "false", level = 1 }})
+      attempts = 0
+      attempt:setLabel("Attempt " .. attempts)
+      timer.cancel( event.source )
+    end
+
+    -- determine direction of ball
+    if (lastY > y) then
+      direction = "up"
+    elseif (lastY < y) then
+      direction = "down"
+    end
+
+    -- check if ball went into target -> win
+    if (direction == "down" and y+r <= bot) then
+      composer.showOverlay("overlay", { isModal = true, effect = "fade", time = 400, params = { win = "true", level = 1 }})
+      attempts = 0
+      attempt:setLabel("Attempt " .. attempts)
+      count = 0
+      timer.cancel( event.source )
+    end
+
+  end
+
+  local updateTimer = timer.performWithDelay( 1, update, 0 )
+
+  --[[local function onLocalCollision( self, event )
     if ( event.phase == "began" ) then
         collide3 = 1
         if not alerts then
@@ -207,7 +253,7 @@ function scene:create( event )
        count = 0
       end
     end
-  end
+  end]]--
 
 
 
@@ -223,22 +269,22 @@ function scene:create( event )
   physics.addBody(leftWall, "static", {density = 15, friction = 0, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
   physics.addBody(rightWall, "static", {density = 15, friction = 0, bounce = 0, isSensor = false,filter = {maskBits = 12, categoryBits = 2}})
 
-  topWall.collision = onLocalCollision
+  --[[topWall.collision = onLocalCollision
   topWall:addEventListener( "collision", topWall )
   line3.collision = onLocalCollision
   line3:addEventListener( "collision", line3 )
   line1.collision = onLocalCollisionline1
   line1:addEventListener( "collision", line1 )
   line2.collision = onLocalCollisionline2
-  line2:addEventListener( "collision", line2 )
+  line2:addEventListener( "collision", line2 )]]--
 
   ball:addEventListener( "touch", flick ) --ball movement
 
 
 
-  sceneGroup:insert(line1)
+  --[[sceneGroup:insert(line1)
   sceneGroup:insert(line2)
-  sceneGroup:insert(line3)
+  sceneGroup:insert(line3)--]]
   sceneGroup:insert(target)
   sceneGroup:insert(ball)
   sceneGroup:insert(button1)
